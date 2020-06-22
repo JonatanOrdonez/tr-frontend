@@ -1,17 +1,25 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <Loader />
+    <div class="content">
+      <img alt="Vue logo" class="logo" src="./assets/logo.jpg" />
+      <SearchBar />
+      <Domain />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import SearchBar from "./components/SearchBar.vue";
+import Loader from "./components/Loader.vue";
+import Domain from "./components/Domain.vue";
 
 export default {
   name: "App",
   components: {
-    HelloWorld
+    SearchBar,
+    Loader,
+    Domain
   }
 };
 </script>
@@ -21,8 +29,19 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+.content {
+  padding: 0 25%;
+  box-sizing: border-box;
+}
+.logo {
+  text-align: center;
+  margin: 4%;
+  height: 12vh;
+  width: 12vw;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>
