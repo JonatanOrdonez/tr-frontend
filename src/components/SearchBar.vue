@@ -15,7 +15,7 @@
 
 <script>
 import Input from "./Input.vue";
-import { fetchDomain } from "../services/apiService";
+import { fetchDomain, fetchDomains } from "../services/apiService";
 
 export default {
   name: "SearchBar",
@@ -44,26 +44,34 @@ export default {
             message: "Procesando solicitud, espere un momento..."
           });
           this.$store.commit("setDomain", null);
-          fetchDomain(this.searchText).then(
-            data => {
-              this.$store.commit("setLoading", {
-                isLoading: false
-              });
-              this.$store.commit("setDomain", data);
-            },
-            error => {
-              this.$bvToast.toast(error.message, {
-                title: `Error (${error.code})`,
-                autoHideDelay: 5000,
-                variant: "danger",
-                appendToast: true
-              });
-              this.$store.commit("setLoading", {
-                isLoading: false
-              });
-              this.$store.commit("setDomain", null);
-            }
-          );
+          fetchDomain(this.searchText)
+            .then(
+              data => {
+                this.$store.commit("setLoading", {
+                  isLoading: false
+                });
+                this.$store.commit("setDomain", data);
+                return fetchDomains();
+              },
+              error => {
+                this.$bvToast.toast(error.message, {
+                  title: `Error`,
+                  autoHideDelay: 5000,
+                  variant: "danger",
+                  appendToast: true
+                });
+                this.$store.commit("setLoading", {
+                  isLoading: false
+                });
+                this.$store.commit("setDomain", null);
+              }
+            )
+            .then(
+              data => {
+                this.$store.commit("setSearches", data.items);
+              },
+              error => {}
+            );
         }
       }
     },

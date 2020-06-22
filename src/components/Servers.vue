@@ -33,7 +33,7 @@ export default {
 <style scoped lang="scss">
 .TableWrapper {
   overflow: auto;
-  max-height: 25vh;
+  max-height: 20vh;
   max-width: 45vw;
 }
 .scrollbar-primary::-webkit-scrollbar {
@@ -52,6 +52,8 @@ export default {
 }
 
 .ServerTable {
+  &__title {
+  }
   &__head {
     margin: 0;
     padding: 1%;

@@ -10,7 +10,8 @@ export default new Vuex.Store({
       isLoading: false,
       message: null
     },
-    domain: null
+    domain: null,
+    searches: []
   },
   mutations: {
     change(state, flavor) {
@@ -24,12 +25,16 @@ export default new Vuex.Store({
     },
     setDomain(state, domain) {
       state.domain = domain;
+    },
+    setSearches(state, searches) {
+      state.searches = searches
     }
   },
   getters: {
     flavor: state => state.flavor,
     loader: state => state.loader,
-    domain: state => state.domain
+    domain: state => state.domain,
+    searches: state => state.searches
   },
   actions: {},
   modules: {}

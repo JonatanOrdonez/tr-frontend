@@ -4,6 +4,7 @@
     <div class="content">
       <img alt="Vue logo" class="logo" src="./assets/logo.jpg" />
       <SearchBar />
+      <RecentSearches />
       <Domain />
     </div>
   </div>
@@ -13,13 +14,41 @@
 import SearchBar from "./components/SearchBar.vue";
 import Loader from "./components/Loader.vue";
 import Domain from "./components/Domain.vue";
+import RecentSearches from "./components/RecentSearches.vue";
+import { fetchDomains } from "./services/apiService";
 
 export default {
   name: "App",
   components: {
     SearchBar,
     Loader,
-    Domain
+    Domain,
+    RecentSearches
+  },
+  created() {
+    this.$store.commit("setLoading", {
+      isLoading: true,
+      message: "Cargando información, espere un momento..."
+    });
+    fetchDomains().then(
+      data => {
+        this.$store.commit("setSearches", data.items);
+        this.$store.commit("setLoading", {
+          isLoading: false
+        });
+      },
+      error => {
+        this.$bvToast.toast(error.message, {
+          title: `Error (${error.code})`,
+          autoHideDelay: 5000,
+          variant: "danger",
+          appendToast: true
+        });
+        this.$store.commit("setLoading", {
+          isLoading: false
+        });
+      }
+    );
   }
 };
 </script>
